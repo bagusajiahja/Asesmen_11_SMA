@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Asesmen Sumatif – Teks Eksplanasi | Kelas XI</title>
+<style>
+:root{--navy:#1f3a5f;--bg:#f4f6f9;--card:#fff;--tx:#1d2733;--mut:#5b6877;--line:#d5dbe3;--red:#b3261e}
+@media (prefers-color-scheme:dark){:root{--bg:#10161d;--card:#18212b;--tx:#e8edf2;--mut:#9aa7b5;--line:#2c3a49;--navy:#8fb3e3}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 Georgia,"Times New Roman",serif}
+header{background:#1f3a5f;color:#fff;text-align:center;padding:20px 12px}
+header h1{margin:0;font-size:1.25rem;letter-spacing:.5px}header p{margin:4px 0 0;font-size:.9rem;opacity:.9}
+main{max-width:820px;margin:0 auto;padding:16px 12px 60px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:16px;margin:14px 0}
+h2{font-size:1.05rem;color:var(--navy);margin:0 0 10px;border-bottom:2px solid var(--navy);padding-bottom:6px}
+label{display:block;font-size:.9rem;margin:10px 0 4px;color:var(--mut)}
+input[type=text],input[type=number],select,textarea{width:100%;padding:9px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--tx);font:inherit}
+textarea{min-height:110px}
+.row{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px}
+@media(max-width:560px){.row{grid-template-columns:1fr}}
+.q{margin:16px 0;padding-bottom:12px;border-bottom:1px dashed var(--line)}.q:last-child{border:0}
+.opt{display:flex;gap:8px;align-items:flex-start;padding:7px 9px;border:1px solid var(--line);border-radius:4px;margin:5px 0;cursor:pointer}
+.opt:hover{border-color:var(--navy)}.opt input{margin-top:5px}
+.m{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center;margin:8px 0}
+@media(max-width:560px){.m{grid-template-columns:1fr}}
+button{background:#1f3a5f;color:#fff;border:0;padding:11px 22px;border-radius:4px;font:inherit;cursor:pointer}
+button:disabled{opacity:.5}
+.warn{border-left:5px solid var(--red)}.warn li{margin:6px 0}
+#bar{position:sticky;top:0;z-index:5;background:var(--card);border-bottom:1px solid var(--line);padding:8px 12px;display:none;justify-content:space-between;font-size:.9rem}
+#bar b{color:var(--red)}
+.hide{display:none!important}
+#ov{position:fixed;inset:0;background:rgba(0,0,0,.85);color:#fff;display:none;align-items:center;justify-content:center;text-align:center;padding:24px;z-index:9}
+#ov div{max-width:420px}
+.ok{text-align:center;padding:30px 10px}
+</style>
+</head>
+<body>
+<header>
+  <h1>ASESMEN SUMATIF MANDIRI AKHIR</h1>
+  <p>Mata Pelajaran Bahasa Indonesia · Teks Eksplanasi (Fenomena Digital) · Kelas XI SMA</p>
+</header>
+<div id="bar"><span>Peserta: <b id="who" style="color:inherit"></b></span><span>Sisa waktu: <b id="tm">--:--</b> · Pelanggaran: <b id="vc">0</b></span></div>
+<div id="ov"><div><h2 style="color:#fff;border-color:#fff">PERINGATAN</h2><p>Anda meninggalkan halaman asesmen. Pelanggaran telah dicatat dan dilaporkan kepada guru.</p><button onclick="back()">Kembali ke Asesmen</button></div></div>
+
+<main>
+<section id="intro">
+  <div class="card warn">
+    <h2>Peringatan dan Tata Tertib (Wajib Dibaca)</h2>
+    <ol>
+      <li>Asesmen dikerjakan <b>secara individu dan mandiri</b>.</li>
+      <li>Halaman asesmen <b>wajib tetap aktif (ON) dan terbuka</b> selama pengerjaan. Dilarang berpindah tab/aplikasi, membuka jendela lain, atau menutup layar penuh (<i>fullscreen</i>).</li>
+      <li>Setiap kali Anda meninggalkan halaman, sistem <b>mencatat pelanggaran</b> dan melaporkannya kepada guru. Pelanggaran lebih dari 3 kali mengakibatkan jawaban dikirim otomatis.</li>
+      <li>Dilarang melakukan <i>refresh</i>/memuat ulang halaman. Jawaban dapat hilang.</li>
+      <li>Pastikan koneksi internet stabil dan baterai perangkat memadai.</li>
+      <li>Hasil dan kunci jawaban <b>tidak ditampilkan</b> kepada peserta. Nilai disampaikan oleh guru.</li>
+      <li>Jawaban hanya dapat dikirim <b>satu kali</b>.</li>
+    </ol>
+  </div>
+  <div class="card">
+    <h2>Identitas Peserta</h2>
+    <div class="row">
+      <div><label>Nama Lengkap</label><input type="text" id="nama" autocomplete="off"></div>
+      <div><label>Kelas</label><input type="text" id="kelas" placeholder="contoh: XI-1" autocomplete="off"></div>
+      <div><label>No. Absen</label><input type="number" id="absen" min="1" max="60"></div>
+    </div>
+    <label style="margin-top:14px"><input type="checkbox" id="setuju"> Saya telah membaca dan menyetujui tata tertib di atas, serta akan mengerjakan dengan jujur.</label>
+    <p style="color:var(--red);min-height:1.2em" id="err"></p>
+    <button id="go">Mulai Mengerjakan</button>
+  </div>
+</section>
+
+<section id="exam" class="hide">
+  <div class="card"><h2>A. Pilihan Ganda (15 Soal)</h2><p style="color:var(--mut);margin-top:0">Pilih satu jawaban yang paling tepat.</p><div id="pg"></div></div>
+  <div class="card"><h2>B. Menjodohkan (5 Soal)</h2><p style="color:var(--mut);margin-top:0">Jodohkan pernyataan di Kolom A dengan kategori struktur dan kebahasaan yang sesuai di Kolom B.</p>
+    <ul id="kb" style="font-size:.92rem;color:var(--mut)"></ul><div id="mj"></div></div>
+  <div class="card"><h2>C. Uraian HOTS (5 Soal)</h2><div id="ur"></div></div>
+  <div class="card" style="text-align:center"><p id="err2" style="color:var(--red)"></p><button id="kirim">Kirim Jawaban</button></div>
+</section>
+
+<section id="done" class="hide"><div class="card ok"><h2 style="border:0">Jawaban Berhasil Dikirim</h2><p>Terima kasih. Jawaban Anda telah tercatat dan akan diperiksa oleh guru.<br>Nilai akan diumumkan oleh guru mata pelajaran.</p></div></section>
+</main>
+
+<script>
+/* ===== PENGATURAN ===== */
+const API_URL = "GANTI_DENGAN_URL_WEB_APP_APPS_SCRIPT";
+const DURASI_MENIT = 45;
+const MAX_PELANGGARAN = 3;
+/* ====================== */
+
+const PG=[
+["Struktur teks eksplanasi yang berisi penjelasan rantai proses mengapa suatu fenomena dapat terjadi adalah...",["Pernyataan Umum","Deretan Penjelas (Kausalitas)","Interpretasi","Asumsi Penulis"]],
+["Di bawah ini yang merupakan ciri bahasa utama dalam menjelaskan hubungan sebab-akibat adalah...",["Menggunakan kata sifat subjektif","Menggunakan konjungsi dan kata kerja kausalitas","Menggunakan kata kiasan dan majas","Menggunakan kalimat perintah keras"]],
+["Mengapa data fakta terverifikasi sangat krusial dalam deretan penjelas teks eksplanasi?",["Agar teks terlihat tebal dan formal","Memastikan alur sebab-akibat bersifat objektif dan valid secara ilmiah","Agar penulis mendapatkan pujian di media sosial","Karena opini pribadi dilarang dalam seluruh komunikasi"]],
+["Hormon di dalam tubuh yang berfungsi mengatur pelepasan rasa kantuk sesuai pencahayaan lingkungan adalah...",["Dopamin","Melatonin","Kortisol","Adrenalin"]],
+["Istilah teknis yang menggambarkan kondisi otak yang tetap aktif dan terstimulasi akibat notifikasi gawai adalah...",["Insomnia","Hyper-arousal","Nomophobia","FOMO"]],
+["Perhatikan alur: Screen-time malam → Melatonin tertekan → Insomnia. Alur tersebut merupakan bentuk...",["Identifikasi fenomena umum","Rantai kausalitas (sebab-akibat) deretan penjelas","Kesimpulan akhir penulis","Pengenalan judul teks"]],
+["Mengapa teks eksplanasi fenomena digital digolongkan sebagai teks kompleks?",["Karena hanya bisa dibaca oleh para ilmuwan","Karena memuat rangkaian sebab-akibat yang bertahap dan saling memengaruhi","Karena menggunakan bahasa latin di setiap kalimatnya","Karena tidak menyertakan gambar atau ilustrasi"]],
+["Keunggulan menyajikan teks eksplanasi ke dalam bentuk diagram infografis di Padlet adalah...",["Menghemat baterai HP","Memperjelas visualisasi alur sebab-akibat yang abstrak agar lebih mudah dipahami","Memungkinkan murid menyalin teks tanpa dibaca","Menghilangkan syarat keakuratan data fakta"]],
+["Tindakan membandingkan klaim internet dengan situs CekFakta atau riset ilmiah dinamakan...",["Menyusun bagan","Validasi data / membaca kritis","Menulis deskripsi","Membaca cepat"]],
+["Konjungsi yang menunjukkan akibat dalam deretan penjelas adalah...",["Karena, sebab","Akibatnya, sehingga, oleh karena itu","Sebelum, sesudah","Atau, serta"]],
+["Dampak jangka panjang gangguan sirkadian akibat gawai terhadap performa murid di sekolah adalah...",["Nilai pelajaran otomatis meningkat","Penurunan daya ingat, fokus belajar, dan stamina tubuh","Meningkatnya kemampuan mengingat istilah","Tidak ada dampak sama sekali"]],
+["Kalimat “Fitur Infinite Scroll sengaja dirancang untuk menjaga durasi atensi pengguna” tergolong...",["Fakta ilmiah terverifikasi","Hoaks/mitos berlebihan","Pernyataan pendapat pribadi","Istilah konotatif"]],
+["Bagian akhir teks eksplanasi yang memuat intisari atau simpulan pandangan atas fenomena dinamakan...",["Pernyataan Umum","Deretan Penjelas","Interpretasi / Penutup","Orientasi Ulang"]],
+["Apa yang terjadi jika bagian Deretan Penjelas disusun tanpa alur kausalitas yang runtut?",["Teks menjadi lebih mudah dibaca","Pembaca mengalami kerancuan logika (logical fallacy) dalam memahami penyebab fenomena","Data fakta ilmiah otomatis menjadi hoaks","Istilah teknis tidak dapat diketik di platform"]],
+["Menyiapkan bahan ajar terverifikasi sebelum diskusi kelompok bertujuan untuk...",["Melarang murid berpikir kritis","Memfokuskan murid pada kegiatan menganalisis data dan mengonstruksi alur kausalitas","Mengurangi durasi jam pelajaran di kelas","Mengharuskan murid menghafal seluruh teks"]]
+];
+const KB=["Istilah Teknis / Neurobiologi","Pernyataan Umum (Identifikasi Fenomena)","Deretan Penjelas (Rantai Kausalitas)","Validasi Fakta Terverifikasi","Interpretasi / Simpulan Penutup"];
+const MJ=["“Fenomena kecanduan gawai di malam hari marak terjadi pada remaja era digital.”","“Cahaya biru menekan melatonin → Dopamin melonjak → Jam biologis terganggu.”","Dopamin, Melatonin, Ritme Sirkadian, Hyper-arousal.","“Oleh karena itu, batasi penggunaan gawai 60 menit sebelum tidur agar kualitas tidur terjaga.”","“Hasil riset medis membuktikan paparan layar gawai menurunkan durasi tidur REM Sleep.”"];
+const UR=[
+"Berdasarkan Kartu Kasus Canva yang diberikan guru, uraikan rantai sebab-akibat (kausalitas) secara berurutan mulai dari pemicu utama hingga dampak akhir yang dialami remaja saat menggunakan gawai di malam hari!",
+"Di media sosial beredar klaim: “Menatap layar HP sebelum tidur dapat membakar sel otak remaja secara spontan.” Berdasarkan prinsip validasi data dan materi eksplanasi yang kamu pelajari, analisis mengapa klaim tersebut salah dan bagaimanakah narasi ilmiah yang benar untuk menggantikannya!",
+"Buatlah satu paragraf bagian Deretan Penjelas yang memadukan konjungsi kausalitas (seperti “akibatnya” atau “oleh karena itu”) serta menggunakan 3 istilah teknis berikut: “Melatonin”, “Dopamin”, dan “Sirkadian”!",
+"Mengapa kelompokmu memilih menyajikan rantai sebab-akibat ke dalam bentuk diagram alur visual di Padlet dibanding menyajikannya dalam bentuk paragraf teks panjang? Analisis dari sudut pandang kemudahan membaca kritis!",
+"Setelah memirsa dan menganalisis alur kausalitas fenomena screen-time, rumuskan 2 tindakan solutif rasional yang berbasis pada pemutusan rantai kausalitas biologis agar remaja tidak mengalami gangguan tidur akibat gawai!"
+];
+const L="ABCD", $=id=>document.getElementById(id), esc=s=>s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+const shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+
+/* render soal */
+$("pg").innerHTML=PG.map((q,i)=>`<div class="q"><b>${i+1}.</b> ${esc(q[0])}`+shuf([0,1,2,3]).map((o,k)=>`<label class="opt"><input type="radio" name="pg${i}" value="${L[o]}"><span><b>${L[k]}.</b> ${esc(q[1][o])}</span></label>`).join("")+`</div>`).join("");
+$("kb").innerHTML=KB.map((k,i)=>`<li><b>${L[i]=="D"||i<4?L[i]:"E"}.</b> ${esc(k)}</li>`).join("");
+$("mj").innerHTML=MJ.map((t,i)=>`<div class="m"><div><b>${i+1}.</b> ${esc(t)}</div><select name="mj${i}"><option value="">– pilih –</option>${"ABCDE".split("").map(c=>`<option>${c}</option>`).join("")}</select></div>`).join("");
+$("ur").innerHTML=UR.map((t,i)=>`<div class="q"><b>${i+1}.</b> ${esc(t)}<textarea name="ur${i}" placeholder="Tulis jawaban Anda di sini..."></textarea></div>`).join("");
+
+let started=false,sent=false,viol=0,t0,left=DURASI_MENIT*60,timer;
+const fmt=s=>String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");
+const idKey=()=>"asesmen_"+($("nama").value.trim()+$("kelas").value.trim()+$("absen").value).toLowerCase().replace(/\s/g,"");
+
+$("go").onclick=async()=>{
+  const n=$("nama").value.trim(),k=$("kelas").value.trim(),a=$("absen").value;
+  if(!n||!k||!a){$("err").textContent="Nama, kelas, dan nomor absen wajib diisi.";return}
+  if(!$("setuju").checked){$("err").textContent="Anda harus menyetujui tata tertib terlebih dahulu.";return}
+  try{if(localStorage.getItem(idKey())){$("err").textContent="Data Anda sudah tercatat mengerjakan asesmen ini.";return}}catch(e){}
+  try{await document.documentElement.requestFullscreen()}catch(e){}
+  started=true;t0=Date.now();
+  $("intro").classList.add("hide");$("exam").classList.remove("hide");
+  $("bar").style.display="flex";$("who").textContent=n+" · "+k+" · No. "+a;
+  timer=setInterval(()=>{left--;$("tm").textContent=fmt(Math.max(left,0));if(left<=0)submit(true)},1000);
+  window.scrollTo(0,0);
+};
+function flag(){
+  if(!started||sent)return;
+  viol++;$("vc").textContent=viol;$("ov").style.display="flex";
+  if(viol>MAX_PELANGGARAN)submit(true);
+}
+function back(){$("ov").style.display="none";if(!document.fullscreenElement)document.documentElement.requestFullscreen().catch(()=>{})}
+document.addEventListener("visibilitychange",()=>{if(document.hidden)flag()});
+document.addEventListener("fullscreenchange",()=>{if(started&&!sent&&!document.fullscreenElement)flag()});
+["contextmenu","copy","paste","cut"].forEach(ev=>document.addEventListener(ev,e=>{if(started&&!sent)e.preventDefault()}));
+window.addEventListener("beforeunload",e=>{if(started&&!sent){e.preventDefault();e.returnValue=""}});
+
+async function submit(auto){
+  if(sent)return;
+  const pg=PG.map((_,i)=>(document.querySelector(`input[name=pg${i}]:checked`)||{}).value||"");
+  const mj=MJ.map((_,i)=>document.querySelector(`[name=mj${i}]`).value);
+  const ur=UR.map((_,i)=>document.querySelector(`[name=ur${i}]`).value.trim());
+  const kosong=pg.filter(x=>!x).length+mj.filter(x=>!x).length+ur.filter(x=>!x).length;
+  if(!auto&&kosong&&!confirm(kosong+" soal belum dijawab. Tetap kirim?"))return;
+  sent=true;clearInterval(timer);$("kirim").disabled=true;$("ov").style.display="none";
+  const data={nama:$("nama").value.trim(),kelas:$("kelas").value.trim(),absen:$("absen").value,pg,mj,ur,pelanggaran:viol,durasi:Math.round((Date.now()-t0)/60000*10)/10,otomatis:!!auto};
+  try{
+    const r=await fetch(API_URL,{method:"POST",body:JSON.stringify(data)});
+    const j=await r.json();
+    if(!j.ok)throw new Error(j.msg||"gagal");
+    try{localStorage.setItem(idKey(),"1")}catch(e){}
+    $("exam").classList.add("hide");$("bar").style.display="none";$("done").classList.remove("hide");
+    if(document.fullscreenElement)document.exitFullscreen();
+    window.scrollTo(0,0);
+  }catch(e){
+    sent=false;$("kirim").disabled=false;
+    $("err2").textContent="Pengiriman gagal ("+(e.message||"jaringan")+"). Periksa koneksi lalu tekan Kirim Jawaban lagi. Jangan menutup halaman.";
+  }
+}
+$("kirim").onclick=()=>submit(false);
+</script>
+</body>
+</html>
